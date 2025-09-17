@@ -12,14 +12,21 @@ prompt = ChatPromptTemplate(
     ]
 )
 
-st.title('Welcome to the simple chatbot using llama3.2!')
+st.title('Welcome to the simple chatbot using deepseek-r1!!')
 input_text = st.text_input('Ask the model!')
 
-model = Ollama(model='llama3.2')
+model = Ollama(model='deepseek-r1:latest')
 
 parser = StrOutputParser()
 
 chain = prompt|model|parser
 
 if input_text:
-    st.write(chain.invoke({'question':input_text}))
+    with st.spinner("🤔 Thinking..."):
+        raw_output = chain.invoke({'question': input_text})
+    # Remove "thinking" if wrapped in <think> tags
+    if "<think>" in raw_output and "</think>" in raw_output:
+        answer = raw_output.split("</think>")[-1].strip()
+    else:
+        answer = raw_output
+    st.write(answer)

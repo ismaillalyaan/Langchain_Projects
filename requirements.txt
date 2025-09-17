@@ -1,0 +1,10 @@
+langchain_community.llms
+langchain_openai
+langchain_core.prompts 
+langchain_core.output_parser 
+streamlit
+os
+dotenv
+fastapi
+uvicorn
+langserve
